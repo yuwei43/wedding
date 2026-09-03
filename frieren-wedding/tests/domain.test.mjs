@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateRsvp,dayMessage,csvCell,statistics,rsvpOpen} from '../lib/rsvp-domain.ts';
+const range={stayMin:null,stayMax:null};
+const valid={name:'测试旅伴',phone:'00000000000',guests:3,needsStay:false,stayGuests:0,checkIn:null,checkOut:null,notes:'',consent:true};
+test('no-stay record drops stale accommodation fields',()=>{const r=validateRsvp({...valid,stayGuests:3,checkIn:'2026-10-23',checkOut:'2026-10-25'},range);assert.equal(r.stayGuests,0);assert.equal(r.checkIn,null);});
+test('requires consent, valid contact and bounded integer guests',()=>{for(const patch of [{consent:false},{phone:'bad'},{name:''},{guests:0},{guests:1.5},{guests:51},{needsStay:null},{notes:'a'.repeat(501)}])assert.throws(()=>validateRsvp({...valid,...patch},range));});
+test('accommodation validates real calendar dates, order and headcount',()=>{const base={...valid,needsStay:true,stayGuests:2,checkIn:'2026-10-23',checkOut:'2026-10-25'};assert.equal(validateRsvp(base,range).stayGuests,2);for(const patch of [{stayGuests:4},{stayGuests:0},{checkIn:'2026-02-30'},{checkOut:'2026-10-23'},{checkOut:null}])assert.throws(()=>validateRsvp({...base,...patch},range));assert.throws(()=>validateRsvp(base,{stayMin:'2026-10-24',stayMax:null}));assert.throws(()=>validateRsvp(base,{stayMin:null,stayMax:'2026-10-24'}));});
+test('countdown uses Shanghai calendar day across UTC midnight and never negative',()=>{assert.match(dayMessage('2026-10-24',new Date('2026-10-23T15:59:59Z')),/1 天/);assert.match(dayMessage('2026-10-24',new Date('2026-10-23T16:00:00Z')),/就是今天/);assert.match(dayMessage('2026-10-24',new Date('2026-10-24T16:00:00Z')),/感谢/);});
+test('registration cutoff is enforced',()=>{assert.equal(rsvpOpen({enabled:false,deadline:null}),false);assert.equal(rsvpOpen({enabled:true,deadline:'2026-10-20T23:59:59+08:00'},new Date('2026-10-21T00:00:00+08:00')),false);});
+test('CSV prevents formula injection and quotes commas/newlines',()=>{for(const text of ['=SUM(A1)',' +123','@evil','-1','\t=1'])assert.ok(csvCell(text).startsWith('"\''));assert.equal(csvCell('a,"b"'),'"a,""b"""');});
+test('statistics count people nights and not rooms',()=>{assert.deepEqual(statistics([{...valid,stayGuests:2,checkIn:'2026-10-23',checkOut:'2026-10-25'},{...valid,guests:1,stayGuests:0}]),{groups:2,guests:4,stayGuests:2,nights:4});});

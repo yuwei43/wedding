@@ -1,0 +1,8 @@
+.idea/
+.pnpm-store/
+.reference-images/
+.video-frames/
+.video-tools/
+package-tmp/
+frieren-wedding-git-backup/
+*.tar.gz

@@ -1,0 +1,65 @@
+.welcome-letter{padding:0!important;display:block!important;overflow:hidden;max-width:420px!important;width:calc(100% - 36px)!important;height:min(670px,90svh);border-radius:4px!important;background:#f6f2e9!important}
+.welcome-letter>img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.welcome-text{position:absolute;top:9%;left:15px;right:15px;text-align:center}.welcome-text [data-slot=dialog-title]{font-family:var(--serif);font-size:29px;letter-spacing:4px;margin:22px 0 16px;font-weight:400;line-height:1.5}.welcome-text [data-slot=dialog-description]{font-size:11px;letter-spacing:1px;color:#62705b}.welcome-actions{position:absolute;bottom:18px;left:30px;right:30px;display:flex;flex-direction:column;align-items:stretch;gap:5px}.welcome-actions button{height:44px;font-size:12px;letter-spacing:2px;border-radius:3px}.welcome-actions button:last-child{background:#f6f2e9da;font-size:10px}.welcome-text .eyebrow{font-size:8px;letter-spacing:2px}.welcome-letter:focus-visible{outline:0}
+@media(max-width:700px){.hero-art img{object-position:18% center}.hero .quiet-link{background:#f6f2e9d9;display:table;margin:14px auto 0;padding:7px 12px;border-radius:2px}.night-footer>img{object-position:42% bottom}}
+@media(prefers-reduced-motion:reduce){.reveal.is-visible,.letter-open,[data-slot=dialog-content],[data-slot=dialog-overlay]{animation:none!important;transition:none!important}}
+.welcome-letter{background:#f7fbfe!important}.welcome-text [data-slot=dialog-description]{color:#607b91}.welcome-actions button:last-child{background:#f7fbfedd}
+@media(max-width:700px){.hero-art img{object-position:51% center}.hero .quiet-link{background:#f7fbfed9}}
+@media(max-width:700px){.hero{min-height:980px}.hero-copy .primary-link{margin-top:430px}.hero .quiet-link{margin-top:12px}.hero-foot{bottom:20px}}
+.timeline-item h3{color:#2f5f86}.timeline-item .event-time{color:#6f98b7}.timeline-item p{color:#557892}.timeline-item .event-number{color:#bdd5e5}.journey-note{color:#4f718a}.journey-note svg{color:#6f9ab8}
+.timeline-icon{background:#f7fbfe;border-color:#aecbdd;color:#5b86a7;box-shadow:inset 0 0 0 4px #edf6fb}.timeline-item:not(:last-child):before{background:#bfd7e6}
+.ensemble-figure{max-width:720px}.ensemble-figure img{aspect-ratio:2/3;object-fit:cover}
+@font-face{font-family:"Allura";src:url("/fonts/allura-regular.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+.eyebrow,.hero-foot>span:first-child,.venue-mark>span,.music-caption>span,.music-caption>b,.music-caption>small{font-family:"Allura","Segoe Script",cursive!important;font-weight:400}
+.calendar-section{background-image:linear-gradient(#eaf5fba8,#dcecf6a8),url("/images/calendar-couple-heart-blue.png")!important;background-size:cover!important;background-position:center!important}.calendar-section:before{display:none}.calendar-section .date-card{background:#fbfdff82;border-color:#c9deea;outline-color:#e7f0f6;box-shadow:0 20px 60px #315c7908}
+.venue-section{background-image:linear-gradient(#eaf5fba8,#dcecf6a8),url("/images/venue-couple-blue.png")!important;background-size:cover!important;background-position:center!important}.venue-section:before,.venue-section:after{display:none}.venue-section .venue-card{background:#fbfdff82!important;border-color:#c9deea!important;outline-color:#e7f0f6;box-shadow:0 20px 60px #315c7908!important}
+.rsvp-figure{max-width:650px;margin:28px auto 26px;border:1px solid #bfd6e5;padding:6px;background:#f8fcff}.rsvp-figure img{width:100%;aspect-ratio:3/2;object-fit:cover}@media(max-width:700px){.rsvp-figure{width:82%;margin:24px auto 20px;padding:4px}.rsvp-figure img{aspect-ratio:3/2}}
+.reflection-list article,
+.guide-card {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.reflection-list article:nth-child(1),
+.guide-card:nth-child(1) {
+  background-image: linear-gradient(rgba(248, 252, 255, 0.38), rgba(238, 247, 253, 0.48)), url("/images/card-memory-blue-1.png") !important;
+}
+
+.reflection-list article:nth-child(2),
+.guide-card:nth-child(2) {
+  background-image: linear-gradient(rgba(248, 252, 255, 0.38), rgba(238, 247, 253, 0.48)), url("/images/card-memory-blue-2.png") !important;
+}
+
+.reflection-list article:nth-child(3),
+.guide-card:nth-child(3) {
+  background-image: linear-gradient(rgba(248, 252, 255, 0.38), rgba(238, 247, 253, 0.48)), url("/images/card-memory-blue-3.png") !important;
+}
+.hero h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 br {
+  display: none;
+}
+
+.hero h1 span {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.sparkle-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+.letter {
+  position: relative;
+  background-image: linear-gradient(rgba(244, 250, 254, 0.7), rgba(235, 246, 252, 0.74)), url("/images/letter-invitation-blue.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
