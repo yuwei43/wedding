@@ -63,3 +63,4 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.admin-login{display:grid;gap:18px;width:min(100%,360px)}.admin-login label{display:grid;gap:8px;font-size:12px}.admin-login input{height:44px;border:1px solid #aac6d8;background:#f8fcff;padding:0 12px;color:#294f6b}.admin-login .primary-link{cursor:pointer}

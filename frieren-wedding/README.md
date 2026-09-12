@@ -1,62 +1,57 @@
 # 肖禹 & 陈雨晴 · 旅伴来信
 
-《葬送的芙莉莲》旅伴群像主题的婚礼邀请函。婚礼日期为2026年10月24日，地点为福州初元。所有日程时间可后补；未确认的仪式默认隐藏。
+《葬送的芙莉莲》旅伴群像主题婚礼邀请函。项目使用 Next.js 16、React 19 和 MySQL，可在普通 Linux 云服务器上通过 PM2 与 Nginx 运行，不需要 Docker。
 
-## 本地使用
+## 本地启动
 
-Node.js >=22.13、pnpm。执行 `pnpm install`，复制 `.env.example` 中本地测试的 `ADMIN_USER_IDS` 与 `RATE_LIMIT_SALT` 到忽略文件 `.dev.vars`，然后执行 `pnpm db:migrate:local`、`pnpm dev`。如果安装器要求批准构建脚本，仅批准 `esbuild`、`sharp`、`workerd`。
+要求 Node.js 22+、pnpm 以及 MySQL 8+。
 
-本地 `/admin` 登录使用 Sites 提供的模拟身份 `local_seedy`。此身份只用于本地，不得添加到生产管理员名单。数据库位于 `.wrangler/state`，不会上传。
+1. 执行 `pnpm install`。
+2. 将 `.env.example` 复制为 `.env.local`，填写数据库和管理后台配置。
+3. 执行 `pnpm admin:hash -- 你的后台密码`，将结果填入 `ADMIN_PASSWORD_HASH`。
+4. 执行 `pnpm db:migrate` 初始化数据库。
+5. 执行 `pnpm dev`，访问 `http://localhost:3000`。
+
+管理后台地址为 `/admin`。后台通过 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD_HASH` 登录，登录状态保存在签名的 HttpOnly Cookie 中。
 
 ## 修改婚礼信息
 
-主要入口为 `lib/wedding-config.ts`，有完整 TypeScript 类型：
+主要配置入口为 `lib/wedding-config.ts`：
 
-- `date` 使用 `YYYY-MM-DD`；时区为 `Asia/Shanghai`。
-- `dinnerTime` 可填 `18:00`，留 `null` 显示待定。
-- `events` 数组顺序就是页面顺序。每项 `enabled` 控制显隐，`time: null` 显示时间待定。仪式默认隐藏。
-- `venue` 配置地址、导航链接、交通、停车及雨天安排。空说明不显示。没有精确导航时使用完整地址搜索。
-- `copy` 配置邀请正文、章节标题与结尾；如果修改姓名，请同时检查自由文案中的署名。
-- `contact` 默认 `null`，填写后电话会公开展示。
-- `rsvp.enabled` 控制提交；`deadline` 使用带时区的 ISO 时间，例如 `2026-10-20T23:59:59+08:00`。关闭后仍可查看已提交的本人回执，修改需联系新人。
-- `rsvp.stayMin` / `stayMax` 使用日期字符串，分别限制最早入住和最晚离店；默认不限制。
-- `music` 默认关闭。添加获得适当使用许可的本地音乐文件后，设置 `src` 和 `enabled`。必须由宾客点击播放。
-- `images` 可以替换插画。标题、姓名、日期不是主插画内的文字；分享封面是单独图片，修改信息后需同步重制。
+- `date` 使用 `YYYY-MM-DD`，时区为 `Asia/Shanghai`。
+- `events` 数组决定日程顺序，`enabled` 控制显示，`time: null` 显示时间待定。
+- `venue` 配置地址、导航、交通、停车及雨天安排。
+- `copy` 配置邀请正文、章节标题与结尾。
+- `rsvp` 配置回执开关、截止时间和住宿日期范围。
+- `music` 配置本地音乐；浏览器要求由宾客主动点击播放。
+- `images` 配置页面插画和分享封面。
 
-## 回执与管理
-
-宾客以家庭/同行小组填写姓名、电话、人数和住宿需求。需要住宿时填写人数和日期；提交成功不等于酒店预订成功。每份回执的随机私密凭证只保存在本人设备，数据库仅存哈希。换设备或清空存储后联系新人修改；不允许通过手机号查询他人的回执。
-
-后台 `/admin` 支持搜索、住宿与入住日期筛选、修改、安排状态、删除及 CSV 导出。导出的是全部回执，不只当前筛选。人晚数 = 住宿人数 × 晚数，不等于房间数。测试记录应清理；真实记录不自动删除。
-
-生产运行值由 Sites 管理，不能提交到代码：
+## 环境变量
 
 | 名称 | 作用 |
 | --- | --- |
-| `ADMIN_USER_IDS` | 可选，平台当前站点的用户ID，逗号分隔 |
-| `ADMIN_EMAILS` | 平台已认证邮箱白名单；本项目以站点所有者邮箱配置，客户端不可见 |
-| `RATE_LIMIT_SALT` | 限流键盐值，标记为 secret |
-| `SITE_ORIGIN` | 可信站点 HTTPS origin，无末尾斜线，用于同源校验和绝对分享图地址 |
+| `DATABASE_URL` | MySQL 连接地址 |
+| `SITE_ORIGIN` | 正式站点地址，当前为 `https://lemon58.online` |
+| `ADMIN_USERNAME` | 管理后台用户名 |
+| `ADMIN_PASSWORD_HASH` | 使用 `pnpm admin:hash` 生成的密码哈希 |
+| `SESSION_SECRET` | 后台登录 Cookie 签名密钥，至少 32 个随机字符 |
+| `RATE_LIMIT_SALT` | 回执限流使用的随机盐值 |
 
-所有管理接口在服务端验证平台身份。部署必须经过可信的 Sites 身份代理；不要把直接接受身份请求头的 Worker 暴露到额外公网域名。
+真实密码和密钥只能放在服务器的 `.env.production`，不要提交到 Git。
 
-## 测试
+## 数据与隐私
 
-`pnpm typecheck`、`pnpm test`、`pnpm build`。
+回执保存在 MySQL 的 `rsvps` 表中。宾客的私密修改凭证只在数据库保存哈希。后台支持搜索、修改、安排状态、删除和 CSV 导出。
 
-本地服务运行且迁移应用后执行 `python tests/api_test.py`：验证匿名拒绝、同源保护、校验、并发幂等、本人回执权限、数据库持久化、后台修改/导出/删除。仅使用以 TEST-LOCAL 开头且电话全零的合成记录；完成后删除测试记录。
+页面设置了禁止搜索引擎索引，但 `noindex` 不是访问控制；公开链接仍可能被转发。宾客名单、数据库备份和导出的 CSV 不得放入公开仓库。
 
-布局已设计用于360–430px手机宽度及桌面。浏览器模拟不能代替 iOS/Android/微信实机，也不能证明国内各运营商可达；正式发送前需实机确认。
+## 检查与构建
 
-## 发布与隐私
+```bash
+pnpm typecheck
+pnpm test
+pnpm build
+```
 
-初始部署保持仅所有者可见。私密预览链接可能需要平台登录，不是正式宾客免登录链接。正式开放需确认公开范围、婚礼信息、素材和微信可达性，再改变站点访问策略。
+完整的 Ubuntu、MySQL、PM2、Nginx、域名和 HTTPS 部署步骤见 `DEPLOY-MYSQL.md`。
 
-页面不允许搜索引擎索引，但 `noindex` 不是访问控制。公开后链接可以转发。宾客名单和导出文件不得放入公开仓库。婚礼结束后先导出、检查备份，再按需删除个人信息。
-
-## 已知边界
-
-- 没有真人照片、自动订房、短信、支付或公开留言。
-- 微信定制分享卡片需要单独具备公众号与JS-SDK条件；当前提供标准 Open Graph / X 元信息。
-- 主题插画不是场地实景，使用动漫角色不代表官方授权。素材记录见 `ASSETS.md`。
-- 缺失音乐时隐藏按钮；缺失插画时婚礼文字及报名仍可使用。

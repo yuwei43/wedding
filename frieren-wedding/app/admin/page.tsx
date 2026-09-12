@@ -1,5 +1,4 @@
-import { getChatGPTUser,chatGPTSignInPath as chatgptSignInPath } from '@/app/chatgpt-auth';
-import { isAdmin } from '@/lib/server';
+import { isAdminSession } from '@/lib/admin-auth';
 import AdminDashboard from '@/components/admin-dashboard';
 export const dynamic='force-dynamic';
-export default async function Admin(){const user=await getChatGPTUser();if(!user)return <main className="admin-gate"><p className="eyebrow">FOR THE HOSTS</p><h1>婚礼回信管理</h1><p>仅限新人管理账号。登录后仍需验证管理权限。</p><a className="primary-link" href={chatgptSignInPath('/admin')} target="_top">登录管理账号</a><a href="/">返回邀请函</a></main>;if(!await isAdmin())return <main className="admin-gate"><h1>暂无管理权限</h1><p>当前账号未被授权管理宾客信息。请使用已配置的新人账号。</p><a href="/">返回邀请函</a></main>;return <AdminDashboard/>;}
+export default async function Admin({searchParams}:{searchParams:Promise<{error?:string}>}){if(!await isAdminSession()){const {error}=await searchParams;return <main className="admin-gate"><p className="eyebrow">FOR THE HOSTS</p><h1>婚礼回信管理</h1><p>仅限新人管理账号。</p>{error&&<p className="form-error" role="alert">账号或密码不正确。</p>}<form action="/api/admin/login" method="post" className="admin-login"><label>管理账号<input name="username" autoComplete="username" required/></label><label>管理密码<input name="password" type="password" autoComplete="current-password" required/></label><button className="primary-link" type="submit">登录管理后台</button></form><a href="/">返回邀请函</a></main>}return <AdminDashboard/>;}

@@ -12,7 +12,7 @@ export type WeddingConfig = {
 export const wedding: WeddingConfig = {
   couple: { groom: '肖禹', bride: '陈雨晴' }, date: '2026-10-24', timezone: 'Asia/Shanghai', dinnerTime: null,
   venue: { name: '初元', city: '福州', address: '福州市鼓楼区华侨新村36号', navigationUrl: '', traffic: '', parking: '', rainPlan: '' }, contact: null,
-  copy: { headline: '下一段旅程，邀请你同行。', introduction: ['我们决定，把往后的日常写进同一段旅程。', '这个十月，想邀请你来到初元，', '在风与草木之间相聚，留下合照，共享晚宴。', '肖禹与陈雨晴，期待与你见面。'], closing: '故事还在继续，很高兴这一页有你。', outdoor: '活动包含户外环节，建议选择便于行走的鞋履；具体安排以新人通知为准。', sections: { letter: '写给同行的你', reflections: '旅途中，想与你分享', calendar: '把这一天，留给相聚', journey: '这一天的旅程', companions: '旅伴们，也来见证这一页', venue: '循着风，来见面', guide: '出发前的小小指南', rsvp: '寄一封，赴约的回信' } },
+  copy: { headline: '下一段旅程，邀请你同行。', introduction: ['我们决定，把往后的日常写进同一段旅程。', '这个十月，想邀请你来到福州，', '在风与草木之间相聚，留下合照，共享晚宴。', '肖禹与陈雨晴，期待与你见面。'], closing: '故事还在继续，很高兴这一页有你。', outdoor: '活动包含户外环节，具体安排以新人通知为准。', sections: { letter: '写给同行的你', reflections: '旅途中，想与你分享', calendar: '把这一天，留给相聚', journey: '这一天的旅程', companions: '旅伴们，也来见证这一页', venue: '循着风，来见面', guide: '出发前的小小指南', rsvp: '寄一封，赴约的回信' } },
   reflections: [
     { title: '关于时间', text: '重要的不是旅程有多长，而是一起度过的每一刻。' },
     { title: '关于同行', text: '有人并肩看过平凡的风景，日常也会拥有魔法。' },
@@ -31,7 +31,7 @@ export const wedding: WeddingConfig = {
     { id: 'dinner', title: '共进晚宴', time: null, description: '围坐相聚，共享这一晚', enabled: true },
   ],
   images: { hero: '/images/frieren-himmel-hero-blue.png', celebration: '/images/companions-snow-blue.png', companions: '/images/companions-flower-circle-blue.png', night: '/images/frieren-himmel-night.webp', share: '/og-frieren-himmel.webp', envelope:'/images/envelope-blue.webp' },
-  music: { enabled: true, src: '/audio/frieren-main-theme.mp3', title: 'New Friends and Old Faces', artist: 'Evan Call', volume: 0.32, startOnFirstInteraction: true }, rsvp: { enabled: true, deadline: null, stayMin: null, stayMax: null },
+  music: { enabled: true, src: '/audio/frieren-main-theme.mp3', title: 'New Friends and Old Faces', artist: 'Evan Call', volume: 0.32, startOnFirstInteraction: true }, rsvp: { enabled: true, deadline: null, stayMin: '2026-10-24', stayMax: '2026-10-25' },
 };
 export const coupleNames = `${wedding.couple.groom} & ${wedding.couple.bride}`;
 export const dateLabel = wedding.date.replaceAll('-', '.');

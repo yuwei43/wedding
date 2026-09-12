@@ -1,0 +1,7 @@
+{
+  "host": "124.220.19.31",
+  "port": 22,
+  "user": "root",
+  "appDir": "/www/wwwroot/xyu/frieren-wedding",
+  "processName": "wedding"
+}
