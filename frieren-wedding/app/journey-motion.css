@@ -48,6 +48,33 @@
 .copy-address { min-width: 108px; }
 .copy-message { min-height: 18px; }
 
+/* Keep every part of the memory cards on the same visual centre line. */
+.reflection-list article {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 250px; padding: 28px 24px; text-align: center;
+}
+.reflection-list article::before { display: none; }
+.reflection-list article > span {
+  position: static; display: block; margin: 0 0 16px; line-height: 1;
+}
+.reflection-list article > span::after {
+  content: ''; display: block; width: 32px; height: 1px;
+  margin: 12px auto 0; background: #a8c5d8;
+}
+.reflection-list article h3 { margin: 0 0 12px; }
+.reflection-list article p { width: 100%; max-width: 28em; margin: 0; text-wrap: balance; }
+
+/* A paper mat frames both the illustration and its caption. */
+.celebration-figure {
+  padding: 10px; border: 1px solid #aac7da; background: #f8fcff;
+  box-shadow: 0 12px 32px #385f7b0d;
+}
+.celebration-figure img { display: block; box-shadow: none; }
+.celebration-figure figcaption { border: 0; padding: 18px 8px 10px; text-align: center; line-height: 1.8; }
+.hero-meta .hero-address { display: block; margin: 8px 0 0; color: inherit; line-height: 1.9; letter-spacing: 1px; }
+.date-card-bottom .full-venue-address { margin: 0; font-size: 14px; line-height: 2; text-wrap: balance; }
+.night-copy > p:last-of-type { line-height: 2.2; }
+
 /* Actual controls, including keyboard and touch access, for the existing photographs. */
 .memory-photo {
   position: relative; display: block; padding: 0; width: 100%; border: 0;
@@ -150,8 +177,10 @@
   .guide-trigger:hover { background: #e6f3fc30; }
 }
 @media (max-width: 700px) {
-  .hero-art { inset: 350px 0 0; }
-  .hero-atmosphere { top: 350px; }
+  .hero-art { inset: 380px 0 0; }
+  .hero-atmosphere { top: 380px; }
+  .reflection-list article { min-height: 190px; padding: 24px 22px; }
+  .celebration-figure { padding: 7px; }
   .interactive-guide { grid-template-columns: 1fr; gap: 16px; }
   .guide-trigger { padding: 23px 24px 19px !important; min-height: 130px; }
   .guide-question { gap: 17px; }

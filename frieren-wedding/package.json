@@ -13,6 +13,7 @@
     "format": "oxfmt",
     "db:migrate": "node scripts/migrate-mysql.mjs",
     "admin:hash": "node scripts/hash-password.mjs",
+    "admin:check": "node scripts/check-admin-config.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/domain.test.mjs"
   },

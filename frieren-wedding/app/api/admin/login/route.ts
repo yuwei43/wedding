@@ -1,2 +1,3 @@
 import { createAdminSession,verifyAdminPassword } from '@/lib/admin-auth';
-export async function POST(request:Request){const form=await request.formData(),username=String(form.get('username')||''),password=String(form.get('password')||'');if(!verifyAdminPassword(username,password))return Response.redirect(new URL('/admin?error=1',request.url),303);await createAdminSession(username);return Response.redirect(new URL('/admin',request.url),303);}
+import { adminRedirect } from '@/lib/admin-settings';
+export async function POST(request:Request){const form=await request.formData(),username=String(form.get('username')||''),password=String(form.get('password')||'');if(!verifyAdminPassword(username,password))return adminRedirect(true);await createAdminSession(username);return adminRedirect();}

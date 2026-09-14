@@ -1,0 +1,14 @@
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const nextRequire = createRequire(require.resolve('next/package.json'));
+const { loadEnvConfig } = nextRequire('@next/env');
+process.env.NODE_ENV = 'production';
+const { loadedEnvFiles } = loadEnvConfig(process.cwd(), false, {info(){},error(){}});
+const hash = process.env.ADMIN_PASSWORD_HASH || '';
+console.log('Environment files:', loadedEnvFiles.map(file => file.path).join(', ') || '(none)');
+console.log('ADMIN_USERNAME:', process.env.ADMIN_USERNAME || '(missing)');
+console.log('ADMIN_PASSWORD_HASH format:', /^scrypt\$[a-f0-9]{32}\$[a-f0-9]{64}$/.test(hash) ? 'OK' : 'INVALID or missing');
+console.log('SESSION_SECRET:', process.env.SESSION_SECRET ? 'SET (hidden)' : 'MISSING');
+console.log('Production cookie:', process.env.ADMIN_COOKIE_SECURE === 'false' ? 'HTTP allowed (temporary, insecure)' : 'HTTPS required');
+console.log('Read-only check; no passwords, hashes or secret values printed.');
+console.log('This checks files and this shell environment, not the already-running PM2 process.');

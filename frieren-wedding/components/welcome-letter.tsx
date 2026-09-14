@@ -13,6 +13,7 @@ export default function WelcomeLetter() {
   const attempt = useRef(0);
   const [destination, setDestination] = useState<string | null>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const letterDialog = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const initialFrame = requestAnimationFrame(() => {
       try { if (!location.hash && !sessionStorage.getItem('wedding-letter-opened')) setOpen(true); }
@@ -74,7 +75,7 @@ export default function WelcomeLetter() {
       window.dispatchEvent(new Event('wedding-music-start'));
     }
   }}>
-    <DialogContent className={`welcome-letter animated-envelope${preparing ? ' is-preparing' : ''}`} aria-busy={preparing} finalFocus={destination ? false : () => opener.current?.isConnected ? opener.current : document.querySelector<HTMLElement>('.open-letter-link')}>
+    <DialogContent ref={letterDialog} initialFocus={letterDialog} className={`welcome-letter animated-envelope${preparing ? ' is-preparing' : ''}`} aria-busy={preparing} finalFocus={destination ? false : () => opener.current?.isConnected ? opener.current : document.querySelector<HTMLElement>('.open-letter-link')}>
       <img src={wedding.images.envelope} alt="蓝白花草与旅行手记旁，一封带蓝色星光封蜡的邀请信"/>
       <div className="envelope-light" aria-hidden="true"/>
       <div className="welcome-text"><p className="eyebrow">A LETTER FOR OUR COMPANIONS</p><DialogTitle>{coupleNames}</DialogTitle><DialogDescription>{dateLabel} · 一封写给你的婚礼邀请</DialogDescription></div>

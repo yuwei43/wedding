@@ -1,2 +1,3 @@
 import { clearAdminSession } from '@/lib/admin-auth';
-export async function POST(request:Request){await clearAdminSession();return Response.redirect(new URL('/admin',request.url),303);}
+import { adminRedirect } from '@/lib/admin-settings';
+export async function POST(){await clearAdminSession();return adminRedirect();}

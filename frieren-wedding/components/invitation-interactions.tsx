@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, Check, Copy, Music2, VolumeX } from 'lucide-react';
-import { wedding } from '@/lib/wedding-config';
+import { wedding, venueLabel } from '@/lib/wedding-config';
 import { dayMessage } from '@/lib/rsvp-domain';
 import { Button } from '@/components/ui/button';
 
@@ -33,7 +33,7 @@ export function CopyAddress() {
   useEffect(() => () => { if (timeout.current) clearTimeout(timeout.current); }, []);
   return <><Button variant="outline" className="copy-address" onClick={async () => {
     try {
-      await navigator.clipboard.writeText(`${wedding.venue.name} · ${wedding.venue.address}`);
+      await navigator.clipboard.writeText(venueLabel);
       setCopied(true);
       setMessage('地址已复制，出发时见');
       if (timeout.current) clearTimeout(timeout.current);

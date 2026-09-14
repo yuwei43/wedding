@@ -30,9 +30,17 @@ export const wedding: WeddingConfig = {
     { id: 'ceremony', title: '婚礼仪式', time: null, description: '见证我们共同的约定', enabled: false },
     { id: 'dinner', title: '共进晚宴', time: null, description: '围坐相聚，共享这一晚', enabled: true },
   ],
-  images: { hero: '/images/frieren-himmel-hero-blue.png', celebration: '/images/companions-snow-blue.png', companions: '/images/companions-flower-circle-blue.png', night: '/images/frieren-himmel-night.webp', share: '/og-frieren-himmel.webp', envelope:'/images/envelope-blue.webp' },
+  images: { hero: '/images/frieren-himmel-hero-blue.png', celebration: '/images/companions-snow-blue.png', companions: '/images/companions-flower-circle-blue.png', night: '/images/frieren-himmel-night.webp', share: '/og-share-envelope.jpg', envelope:'/images/envelope-blue.webp' },
   music: { enabled: true, src: '/audio/frieren-main-theme.mp3', title: 'New Friends and Old Faces', artist: 'Evan Call', volume: 0.32, startOnFirstInteraction: true }, rsvp: { enabled: true, deadline: null, stayMin: '2026-10-24', stayMax: '2026-10-25' },
 };
 export const coupleNames = `${wedding.couple.groom} & ${wedding.couple.bride}`;
 export const dateLabel = wedding.date.replaceAll('-', '.');
-export const navigationUrl = wedding.venue.navigationUrl || `https://uri.amap.com/search?keyword=${encodeURIComponent(wedding.venue.address + ' ' + wedding.venue.name)}&src=wedding&callnative=1`;
+export const venueLabel = `${wedding.venue.name} · ${wedding.venue.address}`;
+// Let Amap attempt its native app; the invitation remains in its original tab.
+export const navigationUrl = wedding.venue.navigationUrl || `https://uri.amap.com/search?${new URLSearchParams({
+  keyword: wedding.venue.address,
+  city: wedding.venue.city,
+  view: 'map',
+  src: 'wedding',
+  callnative: '1',
+})}`;

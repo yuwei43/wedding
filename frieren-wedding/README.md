@@ -31,7 +31,7 @@
 | 名称 | 作用 |
 | --- | --- |
 | `DATABASE_URL` | MySQL 连接地址 |
-| `SITE_ORIGIN` | 正式站点地址，当前为 `https://lemon58.online` |
+| `SITE_ORIGIN` | 当前公开访问地址；暂用 IP 时设为 `http://124.220.19.31:3000`（含端口），会用于分享图地址和请求来源校验 |
 | `ADMIN_USERNAME` | 管理后台用户名 |
 | `ADMIN_PASSWORD_HASH` | 使用 `pnpm admin:hash` 生成的密码哈希 |
 | `SESSION_SECRET` | 后台登录 Cookie 签名密钥，至少 32 个随机字符 |
@@ -54,4 +54,3 @@ pnpm build
 ```
 
 完整的 Ubuntu、MySQL、PM2、Nginx、域名和 HTTPS 部署步骤见 `DEPLOY-MYSQL.md`。
-
